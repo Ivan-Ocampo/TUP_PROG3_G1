@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Productos | Luxury</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <h1 class="titulo-pagina">Luxury</h1>
+    <nav class="nav">
+      <ul class="links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="#">Productos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <br>
+    <h2 class="titulo-destacados">Catálogo completo</h2>
+    <label for="categorias">Filtrar por categorías:</label>
+    <select name="categorias" id="categorias">
+      <option value="">Todos</option>
+      <option value="cadenas">Cadenas</option>
+      <option value="anillos">Anillos</option>
+      <option value="pendientes">Pendientes</option>
+      <option value="relojes">Relojes</option>
+    </select>
+
+    <div class="flex-contenedor-catalogo" id="catalogo"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Luxury</p>
+  </footer>
+
+  <script type="module" src="../assets/js/catalogo.js"></script>
+</body>
+</html>
+
