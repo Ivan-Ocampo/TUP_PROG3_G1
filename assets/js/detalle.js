@@ -48,20 +48,20 @@ function renderizar(prod) {
   contenedor.innerHTML = `
     <div class="card-detalle">
       <h2>${prod.nombre}</h2>
-      <img src="${prod.img}" alt="${prod.nombre}">
+      <img src="${prod.img}" alt="${prod.alt}">
       <p>${prod.descripcion}</p>
       <p>Categoría: ${prod.categoria}</p>
       <p><strong>Precio: $${prod.precio.toLocaleString("es-AR")}</strong></p>
       <p>Stock disponible: <span id="stock-display">${stockDisponible ? prod.stock : 0}</span></p>
       <div class="cantidad-selector" ${!stockDisponible ? 'style="display: none;"' : ''}>
         <label for="cantidad">Cantidad:</label>
-        <select id="cantidad">
+        <select id="cantidad" aria-label="Menú despleable para seleccionar la cantidad de productos">
           ${Array.from({length: Math.min(prod.stock, 10)}, (_, i) => 
             `<option value="${i + 1}">${i + 1}</option>`
           ).join('')}
         </select>
       </div>
-      <button id="btnCarrito" ${!stockDisponible ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+      <button id="btnCarrito" aria-label="Botón para agregar producto al carrito" ${!stockDisponible ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
         ${stockDisponible ? 'Agregar al carrito' : 'Sin stock'}
       </button>
       <div id="mensaje" style="margin-top: 10px; font-weight: bold;"></div>

@@ -6,19 +6,19 @@ export class CartManager {
     this.storageKey = 'luxury_cart';
     this.stockKey = 'luxury_stock';
     this.filtersKey = 'luxury_filters';
-    
+
     // Inicializar el carrito
     this.initCart();
-    
+
     // Escuchar cambios de storage para sincronización entre pestañas
     window.addEventListener('storage', this.handleStorageChange.bind(this));
-    
+
     // Escuchar eventos de navegación (botón atrás/adelante)
     window.addEventListener('popstate', this.handlePopState.bind(this));
-    
+
     // Escuchar cuando la página se hace visible nuevamente
     document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
-    
+
     // Escuchar focus de la ventana
     window.addEventListener('focus', this.handleWindowFocus.bind(this));
   }
@@ -102,7 +102,7 @@ export class CartManager {
 
     // Buscar si el producto ya existe en el carrito
     const existingItem = this.cart.find(item => item.id === product.id);
-    
+
     if (existingItem) {
       // Si existe, aumentar cantidad
       const newQuantity = existingItem.quantity + quantity;
@@ -123,10 +123,10 @@ export class CartManager {
 
     // Actualizar stock
     this.updateStock(product.id, -quantity);
-    
+
     // Guardar cambios
     this.saveCartToStorage();
-    
+
     return this.cart;
   }
 
@@ -181,12 +181,12 @@ export class CartManager {
   // Obtener stock actual (original - cantidad en carrito)
   getCurrentStock(productId) {
     const customStock = this.getStockFromStorage();
-    
+
     // Si hay stock personalizado guardado, usarlo
     if (customStock.hasOwnProperty(productId)) {
       return customStock[productId];
     }
-    
+
     // Si no, necesitamos el stock original del producto
     // Este valor debería venir del módulo data.js
     return this.getOriginalStock(productId);
@@ -202,7 +202,7 @@ export class CartManager {
   updateStock(productId, change) {
     const currentStock = this.getCurrentStock(productId);
     const newStock = Math.max(0, currentStock + change);
-    
+
     const stockUpdates = {};
     stockUpdates[productId] = newStock;
     this.saveStockToStorage(stockUpdates);
@@ -213,17 +213,17 @@ export class CartManager {
     // SIEMPRE obtener el carrito fresco desde localStorage
     this.cart = this.getCartFromStorage();
     const counter = document.querySelector('#cart-counter');
-    
+
     if (counter) {
       const totalItems = this.cart.reduce((total, item) => total + item.quantity, 0);
       const currentText = counter.textContent;
-      
+
       // Solo actualizar si el valor cambió para evitar animaciones innecesarias
       if (currentText !== totalItems.toString()) {
         counter.textContent = totalItems;
         console.log(`📌 Contador actualizado: ${totalItems} items`);
       }
-      
+
       if (totalItems > 0) {
         counter.style.display = 'flex';
         counter.classList.add('cart-counter-visible');
@@ -269,7 +269,7 @@ export class CartManager {
     this.cart.forEach(item => {
       this.updateStock(item.id, item.quantity);
     });
-    
+
     this.cart = [];
     this.saveCartToStorage();
   }
@@ -279,7 +279,7 @@ export class CartManager {
     if (event.key === this.storageKey) {
       this.cart = this.getCartFromStorage();
       this.updateCartCounter();
-      
+
       // Disparar evento personalizado para notificar cambios
       window.dispatchEvent(new CustomEvent('cartUpdated', {
         detail: { cart: this.cart }
@@ -322,11 +322,11 @@ export class CartManager {
   // Método para actualizar los productos originales con el stock actual
   updateProductsWithCurrentStock(productos) {
     const customStock = this.getStockFromStorage();
-    
+
     return productos.map(producto => ({
       ...producto,
-      stock: customStock.hasOwnProperty(producto.id) ? 
-        customStock[producto.id] : 
+      stock: customStock.hasOwnProperty(producto.id) ?
+        customStock[producto.id] :
         producto.stock
     }));
   }
@@ -335,13 +335,13 @@ export class CartManager {
   initializeStock(productos) {
     const existingStock = this.getStockFromStorage();
     const stockUpdates = {};
-    
+
     productos.forEach(producto => {
       if (!existingStock.hasOwnProperty(producto.id)) {
         stockUpdates[producto.id] = producto.stock;
       }
     });
-    
+
     if (Object.keys(stockUpdates).length > 0) {
       this.saveStockToStorage(stockUpdates);
     }
@@ -358,7 +358,7 @@ window.cartManager = cartManager;
 export function addCartIconToPage() {
   // Verificar si ya existe
   if (document.querySelector('#cart-container-fixed')) return;
-  
+
   // Crear contenedor del carrito en esquina superior derecha
   const cartContainer = document.createElement('div');
   cartContainer.id = 'cart-container-fixed';
@@ -370,10 +370,10 @@ export function addCartIconToPage() {
       </div>
     </a>
   `;
-  
+
   // Agregar al body
   document.body.appendChild(cartContainer);
-  
+
   // Actualizar contador inmediatamente después de crear el ícono
   setTimeout(() => {
     if (window.cartManager) {
@@ -386,7 +386,7 @@ export function addCartIconToPage() {
 export function addCartIconToSubpage() {
   // Verificar si ya existe
   if (document.querySelector('#cart-container-fixed')) return;
-  
+
   // Crear contenedor del carrito en esquina superior derecha
   const cartContainer = document.createElement('div');
   cartContainer.id = 'cart-container-fixed';
@@ -398,10 +398,10 @@ export function addCartIconToSubpage() {
       </div>
     </a>
   `;
-  
+
   // Agregar al body
   document.body.appendChild(cartContainer);
-  
+
   // Actualizar contador inmediatamente después de crear el ícono
   setTimeout(() => {
     if (window.cartManager) {
@@ -417,7 +417,7 @@ function initializeCartCounter() {
       window.cartManager.updateCartCounter();
     }
   };
-  
+
   // Múltiples puntos de inicialización para máxima robustez
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
@@ -429,12 +429,12 @@ function initializeCartCounter() {
     setTimeout(updateCounter, 100);
     setTimeout(updateCounter, 300);
   }
-  
+
   // También cuando la página esté completamente cargada
   window.addEventListener('load', () => {
     setTimeout(updateCounter, 100);
   });
-  
+
   // Y cuando el usuario interactúa por primera vez
   const interactionEvents = ['click', 'touchstart', 'keydown'];
   const handleFirstInteraction = () => {
@@ -444,7 +444,7 @@ function initializeCartCounter() {
       document.removeEventListener(event, handleFirstInteraction);
     });
   };
-  
+
   interactionEvents.forEach(event => {
     document.addEventListener(event, handleFirstInteraction, { once: true });
   });
@@ -454,13 +454,13 @@ function initializeCartCounter() {
 initializeCartCounter();
 
 // Función global para mostrar notificaciones mejoradas
-window.showCartNotification = function(message, type = 'success') {
+window.showCartNotification = function (message, type = 'success') {
   // Remover mensaje anterior si existe
   const existingMessage = document.querySelector('.cart-notification');
   if (existingMessage) {
     existingMessage.remove();
   }
-  
+
   const messageDiv = document.createElement("div");
   messageDiv.className = `cart-notification cart-notification-${type}`;
   messageDiv.innerHTML = `
@@ -470,7 +470,7 @@ window.showCartNotification = function(message, type = 'success') {
     <div class="notification-text">${message}</div>
     <div class="notification-close">×</div>
   `;
-  
+
   messageDiv.style.cssText = `
     position: fixed;
     top: 100px;
@@ -481,8 +481,8 @@ window.showCartNotification = function(message, type = 'success') {
     color: white;
     font-weight: 500;
     z-index: 10000;
-    background: ${type === 'success' ? 
-      'linear-gradient(135deg, #27ae60, #2ecc71)' : 
+    background: ${type === 'success' ?
+      'linear-gradient(135deg, #27ae60, #2ecc71)' :
       'linear-gradient(135deg, #e74c3c, #c0392b)'};
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -492,14 +492,14 @@ window.showCartNotification = function(message, type = 'success') {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid rgba(255, 255, 255, 0.2);
   `;
-  
+
   document.body.appendChild(messageDiv);
-  
+
   // Animación de entrada
   setTimeout(() => {
     messageDiv.style.right = '20px';
   }, 10);
-  
+
   // Configurar botón cerrar
   const closeBtn = messageDiv.querySelector('.notification-close');
   closeBtn.style.cssText = `
@@ -517,41 +517,41 @@ window.showCartNotification = function(message, type = 'success') {
     background: rgba(255, 255, 255, 0.2);
     transition: all 0.2s ease;
   `;
-  
+
   closeBtn.addEventListener('mouseenter', () => {
     closeBtn.style.opacity = '1';
     closeBtn.style.background = 'rgba(255, 255, 255, 0.3)';
     closeBtn.style.transform = 'scale(1.1)';
   });
-  
+
   closeBtn.addEventListener('mouseleave', () => {
     closeBtn.style.opacity = '0.8';
     closeBtn.style.background = 'rgba(255, 255, 255, 0.2)';
     closeBtn.style.transform = 'scale(1)';
   });
-  
+
   closeBtn.addEventListener('click', () => {
     removeCartNotification(messageDiv);
   });
-  
+
   // Estilos internos
   const icon = messageDiv.querySelector('.notification-icon');
   icon.style.fontSize = '18px';
-  
+
   const text = messageDiv.querySelector('.notification-text');
   text.style.cssText = 'flex: 1; line-height: 1.4;';
-  
+
   // Auto-remover
   setTimeout(() => {
     removeCartNotification(messageDiv);
   }, 4000);
 };
 
-window.removeCartNotification = function(messageDiv) {
+window.removeCartNotification = function (messageDiv) {
   if (messageDiv && messageDiv.parentNode) {
     messageDiv.style.right = '-400px';
     messageDiv.style.opacity = '0';
-    
+
     setTimeout(() => {
       if (messageDiv.parentNode) {
         messageDiv.parentNode.removeChild(messageDiv);

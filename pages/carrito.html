@@ -3,10 +3,40 @@
 <head>
   <meta charset="utf-8">
   <title>Carrito de Compras | Luxury</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16x16.png">
+  <link rel="manifest" href="../assets/img/site.webmanifest">
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Menú Hamburguesa -->
+  <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+
+  <!-- Overlay para cerrar menú -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+
+  <!-- Menú Lateral -->
+  <nav class="sidebar-menu" id="sidebar-menu">
+    <div class="menu-header">
+      <h2>Luxury</h2>
+      <button class="menu-close" id="menu-close">×</button>
+    </div>
+    <ul class="menu-links">
+      <li><a href="../index.html" class="menu-link">🏠 Inicio</a></li>
+      <li><a href="./productos.html" class="menu-link">💎 Productos</a></li>
+      <li><a href="./contacto.html" class="menu-link">📞 Contacto</a></li>
+    </ul>
+    <div class="menu-footer">
+      <p>Joyas de lujo desde 2025</p>
+    </div>
+  </nav>
+
   <header class="header">
     <h1 class="titulo-pagina">Luxury</h1>
     <nav class="nav">
@@ -19,7 +49,6 @@
   </header>
 
   <main>
-    <br>
     <h2 class="titulo-destacados">Carrito de Compras</h2>
     
     <div id="cart-container">
@@ -30,8 +59,8 @@
           <h3>Resumen del Pedido</h3>
           <p>Total de productos: <span id="total-items">0</span></p>
           <p class="total-price">Total: $<span id="total-price">0</span></p>
-          <button id="checkout-btn" class="btn-checkout">Proceder al Pago</button>
-          <button id="clear-cart-btn" class="btn-clear">Vaciar Carrito</button>
+          <button aria-label="Botón para proceder al pago" id="checkout-btn" class="btn-checkout">Proceder al Pago</button>
+          <button areia-label="Bóton para vaciar carrito" id="clear-cart-btn" class="btn-clear">Vaciar Carrito</button>
         </div>
       </div>
       
@@ -40,7 +69,7 @@
           <h3>Tu carrito está vacío</h3>
           <p>¡Explora nuestro catálogo y encuentra las joyas perfectas para ti!</p>
           <a href="productos.html">
-            <button class="btn-browse">Ver Productos</button>
+            <button aria-labe="Volver al catálogo" class="btn-browse">Ver Productos</button>
           </a>
         </div>
       </div>
@@ -51,6 +80,7 @@
     <p>&copy; 2025 Luxury</p>
   </footer>
 
+  <script src="../assets/js/menu.js"></script>
   <script type="module" src="../assets/js/carrito.js"></script>
 </body>
 </html>

@@ -50,12 +50,12 @@ function renderizar(lista) {
     
     div.innerHTML = `
       <h3>${prod.nombre}</h3>
-      <img src="${prod.img}" alt="${prod.nombre}">
+      <img src="${prod.img}" alt="${prod.alt}">
       <p><strong>Precio: $${prod.precio.toLocaleString("es-AR")}</strong></p>
       <p>${prod.descripcion}</p>
       <p>Categoría: ${prod.categoria} • ${stockMessage}</p>
       <a href="producto.html?id=${prod.id}">
-        <button ${!stockDisponible ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+        <button aria-label="Ver detalles producto" ${!stockDisponible ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
           Ver detalles
         </button>
       </a>

@@ -70,11 +70,11 @@ function renderCartItems() {
           <div class="cart-item-quantity">
             <span>Cantidad: </span>
             <div class="quantity-controls">
-              <button class="btn-quantity btn-decrease" data-id="${item.id}" ${item.quantity <= 1 ? 'disabled' : ''}>
+              <button aria-label="Botón para disminuir la cantidad de productos" class="btn-quantity btn-decrease" data-id="${item.id}" ${item.quantity <= 1 ? 'disabled' : ''}>
                 −
               </button>
               <span class="quantity-display">${item.quantity}</span>
-              <button class="btn-quantity btn-increase" data-id="${item.id}">
+              <button aria-label="Botón para aumentar la cantidad de productos" class="btn-quantity btn-increase" data-id="${item.id}">
                 +
               </button>
             </div>
@@ -83,7 +83,7 @@ function renderCartItems() {
         </div>
       </div>
       <div class="cart-item-actions">
-        <button class="btn-remove-all" data-id="${item.id}">
+        <button aria-label="Botón para eliminar todos los productos" class="btn-remove-all" data-id="${item.id}">
           🗑️ Eliminar Todo
         </button>
       </div>
