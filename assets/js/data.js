@@ -8,6 +8,7 @@ export const productos = [
     categoria: "cadenas",
     precio: 20000,
     stock: 5,
+    imgIndex: "./assets/img/cadena1.jpg",
     img: "../assets/img/cadena1.jpg",
     alt:"Imagen de una cadena de oro"
   },
@@ -18,6 +19,7 @@ export const productos = [
     categoria: "anillos",
     precio: 10000,
     stock: 10,
+    imgIndex: "../assets/img/anillo1.jpg",
     img: "../assets/img/anillo1.jpg",
     alt:"Imagen de un anillo de oro"
   },
@@ -28,6 +30,7 @@ export const productos = [
     categoria: "pendientes",
     precio: 45000,
     stock: 30,
+    imgIndex: "./assets/img/pendientes1.jpg",
     img: "../assets/img/pendientes1.jpg",
     alt: "Imagen de aros tipos criollitos"
   },
@@ -38,6 +41,7 @@ export const productos = [
     categoria: "relojes",
     precio: 80000,
     stock: 7,
+    imgIndex: "./assets/img/reloj1.jpg",
     img: "../assets/img/reloj1.jpg",
     alt:"Imagen de reloj de pulsera"
   },
@@ -48,6 +52,7 @@ export const productos = [
     categoria: "cadenas",
     precio: 15000,
     stock: 12,
+    imgIndex: "./assets/img/cadena2.jpg",
     img: "../assets/img/cadena2.jpg",
     alt: "Imagen de una cadena fina de oro"
   },
@@ -58,6 +63,7 @@ export const productos = [
     categoria: "anillos",
     precio: 60000,
     stock: 3,
+    imgIndex: "./assets/img/anillo2.jpg",
     img: "../assets/img/anillo2.jpg",
     alt: "Imagen de un anillo de oro blanco"
   },
@@ -68,6 +74,7 @@ export const productos = [
     categoria: "relojes",
     precio: 90000,
     stock: 4,
+    imgIndex: "./assets/img/reloj2.jpg",
     img: "../assets/img/reloj2.jpg",
     alt: "Imagen de un reloj digital"
   },
@@ -78,6 +85,7 @@ export const productos = [
     categoria: "pendientes",
     precio: 50000,
     stock: 8,
+    imgIndex: "./assets/img/pendientes2.jpg",
     img: "../assets/img/pendientes2.jpg",
     alt: "Imagen de unos pendientes largos"
   }

@@ -49,7 +49,7 @@ function renderizar(lista) {
     
     div.innerHTML = `
       <h3>${prod.nombre}</h3>
-      <img src="${prod.img}" alt="${prod.alt}">
+      <img src="${prod.imgIndex}" alt="${prod.alt}">
       <p><strong>Precio: $${prod.precio.toLocaleString("es-AR")}</strong></p>
       <p>${prod.descripcion}</p>
       <p>Categoría: ${prod.categoria} • ${stockMessage}</p>
