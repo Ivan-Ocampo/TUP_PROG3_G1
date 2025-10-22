@@ -19,7 +19,7 @@ export const productos = [
     categoria: "anillos",
     precio: 10000,
     stock: 10,
-    imgIndex: "../assets/img/anillo1.jpg",
+    imgIndex: "./assets/img/anillo1.jpg",
     img: "../assets/img/anillo1.jpg",
     alt:"Imagen de un anillo de oro"
   },
