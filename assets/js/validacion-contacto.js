@@ -1,4 +1,4 @@
-// Capturamos el formulario (el único que hay dentro del contenedor .formulario)
+// Capturamos el formulario
 const form = document.querySelector(".formulario form");
 
 form.addEventListener("submit", validarFormulario);
