@@ -64,7 +64,7 @@ body {
   color: white;
   margin-top: 10px;
   text-align: center;
-  }
+}
 
 /* ======= TITULOS ======= */
 .titulo-destacados {
@@ -104,7 +104,7 @@ h2 {
   font-size: 15px;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .producto h3 {
@@ -124,32 +124,35 @@ h2 {
 
 /*====== ACCORDION en contacto ======*/
 
-.accordion-item{
-  background-color: #710b91;
+.accordion-item {
+  background-color: #ffffff;
   width: 600px;
 
 }
-.accordion-button{
+
+.accordion-button {
   background-color: #b460ce;
   color: white;
- }
+}
 
-.card-text{
+.card-text {
   color: #000000;
 }
 
-@media(max-width: 700px){
-  .accordion-item{
-  background-color: #710b91;
-  width: 450px;}
+@media(max-width: 700px) {
+  .accordion-item {
+    background-color: #ffffff;
+    width: 450px;
+  }
 
 }
 
 
-@media(max-width: 575px){
-  .accordion-item{
-  background-color: #710b91;
-  width: 450px;}
+@media(max-width: 575px) {
+  .accordion-item {
+    background-color: #ffffff;
+    width: 450px;
+  }
 
 }
 
@@ -179,7 +182,7 @@ button:hover {
   text-align: center;
   max-width: 400px;
   margin: 20px auto;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .card-detalle h2 {
@@ -197,14 +200,13 @@ button:hover {
   justify-content: center;
   background-color: gray;
   min-height: 70vh;
-  justify-content: center;
-  align-items: center;
+  align-items: center
 }
 
 .formulario {
   justify-content: center;
-  background-color: #710b91;
-  color: white;
+  background-color: #ffffff;
+  color: #5a0a70;
   margin-bottom: 20px;
   width: 650px;
   text-align: center;
@@ -214,63 +216,74 @@ button:hover {
   border-radius: 12px;
 }
 
-@media (max-width: 1200px){
-  .formulario {
-  background-color: #710b91;
+.btn-violeta {
+  background-color: #b460ce;
   color: white;
-  margin-bottom: 20px;
-  width: 650px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 15px;
-  padding: 20px;
-  border-radius: 12px;
-}
 }
 
-@media (max-width: 992px){
-  .formulario {
-  background-color: #710b91;
+.btn-violeta:hover{
+  background-color: #000000;
   color: white;
-  margin-bottom: 20px;
-  width: 650px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 15px;
-  padding: 20px;
-  border-radius: 12px;
-}
+
 }
 
-@media (max-width: 700px){
+@media (max-width: 1200px) {
   .formulario {
-  align-self: center;
-  background-color: #710b91;
-  color: white;
-  margin-bottom: 20px;
-  width: 450px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 15px;
-  padding: 20px;
-  border-radius: 12px;
-}
+    background-color: #ffffff;
+    color: #5a0a70;
+    margin-bottom: 20px;
+    width: 650px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    padding: 20px;
+    border-radius: 12px;
+  }
 }
 
-@media (max-width: 575px){
+@media (max-width: 992px) {
   .formulario {
-  align-self: center;
-  background-color: #710b91;
-  color: white;
-  margin-bottom: 20px;
-  width: 450px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 15px;
-  padding: 10px;
-  border-radius: 12px;
+    background-color: #ffffff;
+    color: #5a0a70;
+    margin-bottom: 20px;
+    width: 650px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    padding: 20px;
+    border-radius: 12px;
+  }
 }
-  
+
+@media (max-width: 700px) {
+  .formulario {
+    align-self: center;
+    background-color: #ffffff;
+    color: #5a0a70;
+    margin-bottom: 20px;
+    width: 450px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    padding: 20px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 575px) {
+  .formulario {
+    align-self: center;
+    background-color: #ffffff;
+    color: #5a0a70;
+    margin-bottom: 20px;
+    width: 450px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
 
 }
 
@@ -288,6 +301,7 @@ footer {
   text-align: center;
   margin-top: 20px;
 }
+
 /* ======= CARRITO ======= */
 #cart-container {
   max-width: 1200px;
@@ -295,16 +309,17 @@ footer {
   padding: 0 20px;
 }
 
-h1{
+h1 {
   justify-content: center;
   color: #ffffff;
 }
 
-p{
+p {
   display: flex;
   justify-content: center;
   color: #ffffff;
 }
+
 .cart-item {
   background-color: #710b91;
   color: white;
@@ -314,7 +329,7 @@ p{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .cart-item-info {
@@ -378,7 +393,7 @@ p{
   border-radius: 12px;
   text-align: center;
   margin-top: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .cart-total h3 {
@@ -432,7 +447,7 @@ p{
   text-align: center;
   margin: 40px auto;
   max-width: 500px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .empty-cart-message h3 {
@@ -483,12 +498,12 @@ p{
     text-align: center;
     gap: 15px;
   }
-  
+
   .cart-item-info {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .cart-item-image {
     width: 120px;
     height: 120px;
@@ -574,21 +589,30 @@ p{
   0% {
     box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
   }
+
   50% {
     box-shadow: 0 2px 15px rgba(231, 76, 60, 0.6);
   }
+
   100% {
     box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
   }
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0) scale(1);
   }
+
   40% {
     transform: translateY(-10px) scale(1.1);
   }
+
   60% {
     transform: translateY(-5px) scale(1.05);
   }
@@ -620,17 +644,17 @@ p{
     top: 15px;
     right: 15px;
   }
-  
+
   .cart-icon-main {
     width: 50px;
     height: 50px;
     padding: 12px;
   }
-  
+
   .cart-emoji {
     font-size: 24px;
   }
-  
+
   .cart-counter-badge {
     min-width: 20px;
     height: 20px;
@@ -645,17 +669,17 @@ p{
     top: 10px;
     right: 10px;
   }
-  
+
   .cart-icon-main {
     width: 45px;
     height: 45px;
     padding: 10px;
   }
-  
+
   .cart-emoji {
     font-size: 20px;
   }
-  
+
   .cart-counter-badge {
     min-width: 18px;
     height: 18px;
@@ -762,25 +786,25 @@ p{
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .quantity-controls {
     gap: 6px;
   }
-  
+
   .btn-quantity {
     width: 28px;
     height: 28px;
     font-size: 16px;
   }
-  
+
   .btn-decrease {
     font-size: 18px;
   }
-  
+
   .btn-increase {
     font-size: 14px;
   }
-  
+
   .quantity-display {
     padding: 4px 8px;
     font-size: 12px;
@@ -792,22 +816,22 @@ p{
   .cart-item-quantity {
     gap: 6px;
   }
-  
+
   .quantity-controls {
     gap: 4px;
     padding: 2px;
   }
-  
+
   .btn-quantity {
     width: 26px;
     height: 26px;
     font-size: 14px;
   }
-  
+
   .btn-decrease {
     font-size: 16px;
   }
-  
+
   .btn-increase {
     font-size: 12px;
   }
@@ -847,10 +871,12 @@ p{
     transform: translateX(100%) scale(0.8);
     opacity: 0;
   }
+
   50% {
     transform: translateX(-10px) scale(1.02);
     opacity: 0.9;
   }
+
   100% {
     transform: translateX(0) scale(1);
     opacity: 1;
@@ -862,15 +888,19 @@ p{
     transform: translateX(100%) scale(0.8);
     opacity: 0;
   }
+
   25% {
     transform: translateX(-15px) scale(1.05);
   }
+
   50% {
     transform: translateX(5px) scale(1.02);
   }
+
   75% {
     transform: translateX(-5px) scale(1.01);
   }
+
   100% {
     transform: translateX(0) scale(1);
     opacity: 1;
@@ -886,11 +916,11 @@ p{
     padding: 12px 15px !important;
     font-size: 13px !important;
   }
-  
+
   .notification-icon {
     font-size: 16px !important;
   }
-  
+
   .notification-close {
     width: 20px !important;
     height: 20px !important;
@@ -928,7 +958,8 @@ p{
   padding: 12px;
   border-radius: 8px;
   cursor: pointer;
-  display: none; /* Oculto por defecto en desktop */
+  display: none;
+  /* Oculto por defecto en desktop */
   flex-direction: column;
   gap: 4px;
   transition: all 0.3s ease;
@@ -974,7 +1005,8 @@ p{
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
-  display: none; /* Oculto por defecto en desktop */
+  display: none;
+  /* Oculto por defecto en desktop */
 }
 
 .menu-overlay.active {
@@ -992,7 +1024,8 @@ p{
   background: linear-gradient(145deg, #710b91, #8b1aa3);
   z-index: 9998;
   transition: all 0.3s ease;
-  display: none; /* Oculto por defecto en desktop */
+  display: none;
+  /* Oculto por defecto en desktop */
   flex-direction: column;
   box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
 }
@@ -1090,6 +1123,7 @@ p{
 
 /* Tablet y dispositivos medianos (768px y menores) */
 @media (max-width: 768px) {
+
   /* Header responsive */
   .header {
     padding: 0;
@@ -1101,12 +1135,14 @@ p{
   }
 
   .nav {
-    display: none; /* Ocultar navegación tradicional en móvil */
+    display: none;
+    /* Ocultar navegación tradicional en móvil */
   }
 
   /* Mostrar menú hamburguesa solo en móviles */
   .hamburger-btn {
-    display: flex !important; /* Mostrar botón hamburguesa en móviles */
+    display: flex !important;
+    /* Mostrar botón hamburguesa en móviles */
   }
 
   /* Mostrar elementos del menú en móviles */
@@ -1154,7 +1190,7 @@ p{
     padding: 20px 15px;
   }
 
-  
+
 
   /* Carrito responsive */
   #cart-container {
@@ -1207,6 +1243,7 @@ p{
 
 /* Móviles pequeños (480px y menores) */
 @media (max-width: 480px) {
+
   /* Header más compacto */
   .titulo-pagina {
     font-size: 1.8rem;
@@ -1218,7 +1255,8 @@ p{
 
   /* Hamburger button más pequeño */
   .hamburger-btn {
-    display: flex !important; /* Asegurar que se muestre en móviles pequeños */
+    display: flex !important;
+    /* Asegurar que se muestre en móviles pequeños */
     top: 10px;
     left: 15px;
     padding: 10px;
@@ -1270,7 +1308,8 @@ p{
   .formulario input,
   .formulario textarea,
   .formulario select {
-    font-size: 16px; /* Evita zoom en iOS */
+    font-size: 16px;
+    /* Evita zoom en iOS */
   }
 
   /* Carrito más compacto */
@@ -1303,7 +1342,8 @@ p{
   .btn-browse {
     padding: 12px 20px;
     font-size: 16px;
-    min-height: 44px; /* Recomendación Apple para targets táctiles */
+    min-height: 44px;
+    /* Recomendación Apple para targets táctiles */
   }
 
   /* Controles de cantidad más grandes */
@@ -1322,6 +1362,7 @@ p{
 
 /* Pantallas muy grandes (1200px y mayores) */
 @media (min-width: 1200px) {
+
   .flex-contenedor-destacados,
   .flex-contenedor-catalogo {
     grid-template-columns: repeat(4, 1fr);
