@@ -78,7 +78,7 @@
         <div class="formulario border rounded-3 p-4">
 
 
-          <form>
+          <form novalidate>
             <!-- Campo de nombre -->
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre:</label>
@@ -120,13 +120,13 @@
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                aria-expanded="true" aria-controls="collapseOne">
+                aria-expanded="false" aria-controls="collapseOne">
                 Nuestras redes sociales
               </button>
             </h2>
 
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-              data-bs-parent="#accordionExample">
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+              data-bs-parent="#accordionRedes">
               <div class="accordion-body">
 
                 <!-- Contenedor de las tres cards -->
@@ -183,6 +183,7 @@
   </footer>
 
   <script src="../assets/js/menu.js"></script>
+  <script src="../assets/js/validacion-contacto.js"></script>
 </body>
 
 </html>
