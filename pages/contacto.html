@@ -82,8 +82,8 @@
             <!-- Campo de nombre -->
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre:</label>
-              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese un nombre"
-                required>
+              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese un nombre" required
+                minlength="3" maxlength="50" pattern="[A-Za-z\s]+" title="Solo se admiten letras y espacios.">
             </div>
 
             <!-- Campo de correo electrónico -->
@@ -95,14 +95,15 @@
             <!-- Campo de asunto -->
             <div class="mb-3">
               <label for="asunto" class="form-label">Asunto:</label>
-              <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Ingrese un asunto">
+              <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Ingrese un asunto"
+                required>
             </div>
 
             <!-- Campo de mensaje -->
             <div class="mb-3">
               <label for="mensaje" class="form-label">Mensaje:</label>
               <textarea class="form-control" id="mensaje" name="mensaje" rows="5" placeholder="Escribe un mensaje"
-                required></textarea>
+                required minlength="10"></textarea>
             </div>
 
             <!-- Botón de envío -->
