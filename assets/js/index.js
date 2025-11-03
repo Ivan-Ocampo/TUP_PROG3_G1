@@ -1,11 +1,14 @@
 // assets/js/index.js
-import { getProductosWithCurrentStock } from "./data.js";
-import { addCartIconToPage } from "./cart.js";
+
+import { addCartIconToPage, cartManager } from "./cart.js";
 
 const contenedor = document.querySelector("#destacados");
 
 // Agregar carrito a la página principal
 addCartIconToPage();
+
+//Para guardar los productos
+let originalProductos = [];
 
 // Asegurar que el contador se actualice cuando la página esté lista
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cartManager.updateCartCounter();
     }
   };
-  
+
   setTimeout(updateCounter, 50);
   setTimeout(updateCounter, 150);
   setTimeout(updateCounter, 300);
@@ -40,13 +43,13 @@ function renderizar(lista) {
   lista.forEach(prod => {
     const div = document.createElement("div");
     div.classList.add("producto");
-    
+
     // Determinar si hay stock disponible
     const stockDisponible = prod.stock > 0;
-    const stockMessage = stockDisponible ? 
-      `Stock: ${prod.stock}` : 
+    const stockMessage = stockDisponible ?
+      `Stock: ${prod.stock}` :
       '<span style="color: #e74c3c;">Sin stock</span>';
-    
+
     div.innerHTML = `
       <h3>${prod.nombre}</h3>
       <img src="${prod.imgIndex}" alt="${prod.alt}">
@@ -64,23 +67,53 @@ function renderizar(lista) {
 }
 
 // Cargar productos con stock actualizado
-function loadDestacados() {
-  const productosConStock = getProductosWithCurrentStock();
+function cargarDestacados() {
+
+  const productosConStock = cartManager.updateProductsWithCurrentStock(originalProductos);
   const destacados = productosConStock.slice(0, 3);
   renderizar(destacados);
 }
 
-// Cargar productos inicialmente
-loadDestacados();
+// <-- NUEVO: Función 'main' asíncrona para cargar datos
+async function initializeApp() {
+  try {
+    // 1. Cargar los datos del JSON
+    const response = await fetch('./assets/data/data.json');
+    if (!response.ok) {
+      throw new Error(`Error al cargar productos.json: ${response.statusText}`);
+    }
+    originalProductos = await response.json();
+
+  
+    // Configurar cartManager para que sepa de dónde sacar el stock original
+    cartManager.getOriginalStock = function (productId) {
+      const producto = originalProductos.find(p => p.id === productId);
+      return producto ? producto.stock : 0;
+    };
+
+
+    cartManager.initializeStock(originalProductos);
+
+
+    cargarDestacados();
+
+  } catch (error) {
+    console.error("No se pudo inicializar la aplicación:", error);
+    contenedor.innerHTML = "<p>Hubo un error al cargar los productos. Por favor, intente más tarde.</p>";
+  }
+}
 
 // Escuchar cambios en el carrito para actualizar stock
 window.addEventListener('cartUpdated', () => {
-  loadDestacados();
+  cargarDestacados();
 });
 
 // Escuchar cambios de localStorage para sincronización
 window.addEventListener('storage', (event) => {
   if (event.key === 'luxury_stock') {
-    loadDestacados();
+    cargarDestacados();
   }
 });
+
+
+initializeApp();
