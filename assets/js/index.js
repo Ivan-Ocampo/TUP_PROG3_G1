@@ -74,10 +74,10 @@ function cargarDestacados() {
   renderizar(destacados);
 }
 
-// <-- NUEVO: Función 'main' asíncrona para cargar datos
+//Función 'main' asíncrona para cargar datos
 async function initializeApp() {
   try {
-    // 1. Cargar los datos del JSON
+    //Cargar los datos del JSON
     const response = await fetch('./assets/data/data.json');
     if (!response.ok) {
       throw new Error(`Error al cargar productos.json: ${response.statusText}`);
@@ -85,7 +85,7 @@ async function initializeApp() {
     originalProductos = await response.json();
 
   
-    // Configurar cartManager para que sepa de dónde sacar el stock original
+    //Configurar cartManager para que sepa de dónde sacar el stock original
     cartManager.getOriginalStock = function (productId) {
       const producto = originalProductos.find(p => p.id === productId);
       return producto ? producto.stock : 0;
@@ -108,7 +108,7 @@ window.addEventListener('cartUpdated', () => {
   cargarDestacados();
 });
 
-// Escuchar cambios de localStorage para sincronización
+//Escuchar cambios de localStorage para sincronización
 window.addEventListener('storage', (event) => {
   if (event.key === 'luxury_stock') {
     cargarDestacados();

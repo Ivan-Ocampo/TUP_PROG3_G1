@@ -96,7 +96,7 @@ export class CartManager {
   addToCart(product, quantity = 1) {
     // Verificar si hay stock disponible
     const currentStock = this.getCurrentStock(product.id);
-    if (currentStock < quantity) {
+    if (currentStock <= quantity) {
       throw new Error(`Stock insuficiente. Stock disponible: ${currentStock}`);
     }
 
@@ -106,7 +106,7 @@ export class CartManager {
     if (existingItem) {
       // Si existe, aumentar cantidad
       const newQuantity = existingItem.quantity + quantity;
-      if (this.getCurrentStock(product.id) < newQuantity) {
+      if (this.getCurrentStock(product.id) <= newQuantity) {
         throw new Error(`Stock insuficiente. Stock disponible: ${this.getCurrentStock(product.id)}`);
       }
       existingItem.quantity = newQuantity;

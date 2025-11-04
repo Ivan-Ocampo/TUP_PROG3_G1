@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cartManager.updateCartCounter();
     }
   };
-  
+
   setTimeout(updateCounter, 50);
   setTimeout(updateCounter, 150);
   setTimeout(updateCounter, 300);
@@ -42,7 +42,7 @@ document.addEventListener('visibilitychange', () => {
 
 function renderCartItems() {
   const cart = cartManager.getCart();
-  
+
   if (cart.length === 0) {
     // Mostrar mensaje de carrito vacío
     cartItemsContainer.innerHTML = "";
@@ -57,7 +57,7 @@ function renderCartItems() {
 
   // Renderizar items del carrito
   cartItemsContainer.innerHTML = "";
-  
+
   cart.forEach(item => {
     const cartItem = document.createElement("div");
     cartItem.classList.add("cart-item");
@@ -121,7 +121,7 @@ function renderCartItems() {
 function updateCartSummary() {
   const totalItems = cartManager.getTotalItems();
   const totalPrice = cartManager.getTotalPrice();
-  
+
   totalItemsSpan.textContent = totalItems;
   totalPriceSpan.textContent = totalPrice.toLocaleString("es-AR");
 }
@@ -130,7 +130,7 @@ function decreaseQuantity(productId) {
   try {
     const cart = cartManager.getCart();
     const item = cart.find(item => item.id === productId);
-    
+
     if (item && item.quantity > 1) {
       // Disminuir en 1
       cartManager.decreaseQuantity(productId, 1);
@@ -151,7 +151,7 @@ function increaseQuantity(productId) {
   try {
     const cart = cartManager.getCart();
     const item = cart.find(item => item.id === productId);
-    
+
     if (item) {
       // Verificar stock disponible
       const currentStock = cartManager.getCurrentStock(productId);
@@ -172,7 +172,7 @@ function removeAllItemFromCart(productId) {
   try {
     const cart = cartManager.getCart();
     const item = cart.find(item => item.id === productId);
-    
+
     if (item && confirm(`¿Eliminar todos los ${item.nombre} del carrito?`)) {
       const removedItem = cartManager.removeFromCart(productId);
       if (removedItem) {
@@ -212,11 +212,11 @@ function simulateCheckout() {
 
   const totalPrice = cartManager.getTotalPrice();
   const confirmMessage = `¿Confirmar compra por $${totalPrice.toLocaleString("es-AR")}?`;
-  
+
   if (confirm(confirmMessage)) {
     // Simular proceso de checkout
     showMessage("¡Compra realizada con éxito! Gracias por tu compra.", "success");
-    
+
     // Limpiar carrito después del checkout
     setTimeout(() => {
       cartManager.clearCart();

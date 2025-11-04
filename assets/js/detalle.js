@@ -52,7 +52,7 @@ function renderizar(prod) {
  <div class="cantidad-selector" ${!stockDisponible ? 'style="display: none;"' : ''}>
  <label for="cantidad">Cantidad:</label>
  <select id="cantidad" aria-label="Menú despleable para seleccionar la cantidad de productos">
- ${Array.from({ length: Math.min(prod.stock, 10) }, (_, i) =>
+ ${Array.from({ length: Math.min(prod.stock) }, (_, i) =>
     `<option value="${i + 1}">${i + 1}</option>`
   ).join('')}
  </select>
