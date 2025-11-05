@@ -155,7 +155,7 @@ function increaseQuantity(productId) {
     if (item) {
       // Verificar stock disponible
       const currentStock = cartManager.getCurrentStock(productId);
-      if (currentStock > 0) {
+      if (currentStock = 0) {
         cartManager.increaseQuantity(productId, 1);
         showMessage(`${item.nombre} - cantidad aumentada`, "success");
         renderCartItems();

@@ -93,10 +93,10 @@ export class CartManager {
   }
 
   // Agregar producto al carrito
-  addToCart(product, quantity = 0) {
+  addToCart(product, quantity = 1) {
     // Verificar si hay stock disponible
     const currentStock = this.getCurrentStock(product.id);
-    if (currentStock <= quantity) {
+    if (currentStock <= 0) {
       throw new Error(`Stock insuficiente. Stock disponible: ${currentStock}`);
     }
 
