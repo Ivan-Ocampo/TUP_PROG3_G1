@@ -205,9 +205,9 @@ h2 {
 .search-filter-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin: 20px auto;
   max-width: 1200px;
   padding: 0 20px;
@@ -218,6 +218,9 @@ h2 {
   min-width: 250px;
   max-width: 500px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .search-input {
@@ -229,6 +232,7 @@ h2 {
   background: white;
   color: #333;
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .search-input:focus {
@@ -244,8 +248,7 @@ h2 {
 .search-icon {
   position: absolute;
   right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 12px;
   font-size: 1.2rem;
   color: #710b91;
   pointer-events: none;
@@ -253,14 +256,16 @@ h2 {
 
 .filter-box {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
 }
 
 .filter-box label {
   color: white;
   font-weight: 600;
   white-space: nowrap;
+  font-size: 0.95rem;
 }
 
 .filter-select {
@@ -272,7 +277,8 @@ h2 {
   color: #333;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 150px;
+  min-width: 180px;
+  box-sizing: border-box;
 }
 
 .filter-select:focus {
@@ -317,17 +323,25 @@ h2 {
 @media (max-width: 768px) {
   .search-filter-container {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    align-items: stretch;
   }
 
   .search-box,
   .filter-box {
     width: 100%;
+    max-width: 100%;
+    min-width: 100%;
   }
 
   .search-input,
   .filter-select {
     width: 100%;
+  }
+
+  .search-icon {
+    right: 15px;
+    bottom: 12px;
   }
 }
 
