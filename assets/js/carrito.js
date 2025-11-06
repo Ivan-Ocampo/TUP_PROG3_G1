@@ -1,5 +1,6 @@
 // assets/js/carrito.js
 import { cartManager, addCartIconToSubpage, initializeCartCounterUpdates } from "./cart.js";
+import { checkoutAutocompleteAPI } from "./checkout-autocomplete.js";
 
 const cartItemsContainer = document.querySelector("#cart-items");
 const cartSummary = document.querySelector("#cart-summary");
@@ -524,6 +525,9 @@ function showCheckoutFormModal(totalPrice, totalItems) {
   const cancelBtn = checkoutOverlay.querySelector('.btn-checkout-cancel');
   const metodoPagoRadios = checkoutOverlay.querySelectorAll('input[name="metodoPago"]');
   const tarjetaFields = checkoutOverlay.querySelector('#tarjeta-fields');
+
+  // Agregar botón de autocompletar para pruebas
+  checkoutAutocompleteAPI.addAutocompleteButton(form, 'before');
 
   // Enfocar en primer campo
   setTimeout(() => {
