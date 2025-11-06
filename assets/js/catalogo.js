@@ -233,7 +233,7 @@ async function fetchWithErrorHandling(url, errorContext = 'datos') {
 async function initializeApp() {
   try {
     //Cargar los datos del JSON con manejo robusto de errores
-    originalProductos = await fetchWithErrorHandling('../assets/data/data.json', 'productos');
+    originalProductos = await fetchWithErrorHandling('../assets/api/datajoyas.json', 'productos');
 
     // Validar estructura de datos antes de usar
     validateProducts(originalProductos);

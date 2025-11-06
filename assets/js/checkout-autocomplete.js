@@ -20,7 +20,7 @@ class CheckoutAutocompleteAPI {
     }
 
     try {
-      const response = await fetch('../assets/api/test-data.json');
+      const response = await fetch('../assets/api/datapersona.json');
       if (!response.ok) {
         throw new Error(`Error al cargar datos: ${response.status}`);
       }
