@@ -134,7 +134,9 @@ h2 {
   max-width: 1200px;
   background-color: gray;
 }
-
+.pindex{
+  font-size: 20px;
+}
 .producto {
   background-color: #710b91;
   color: white;
