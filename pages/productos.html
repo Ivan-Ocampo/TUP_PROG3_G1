@@ -15,8 +15,11 @@
 </head>
 
 <body>
+  <!-- Skip to main content (accesibilidad) -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
   <!-- Menú Hamburguesa -->
-  <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
+  <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú de navegación">
     <span class="hamburger-line"></span>
     <span class="hamburger-line"></span>
     <span class="hamburger-line"></span>
@@ -53,16 +56,51 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main-content" role="main">
     <h2 class="titulo-destacados">Catálogo completo</h2>
-    <label for="categorias"><strong>Filtrar por categorías:</strong></label>
-    <select name="categorias" id="categorias">
-      <option value="">Todos</option>
-      <option value="cadenas">Cadenas</option>
-      <option value="anillos">Anillos</option>
-      <option value="pendientes">Pendientes</option>
-      <option value="relojes">Relojes</option>
-    </select>
+    
+    <!-- Contenedor de búsqueda y filtros -->
+    <div class="search-filter-container">
+      <!-- Buscador -->
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="search-input" 
+          class="search-input" 
+          placeholder="Buscar productos por nombre..." 
+          aria-label="Buscar productos"
+        >
+        <span class="search-icon" aria-hidden="true">🔍</span>
+      </div>
+      
+      <!-- Filtro de categorías -->
+      <div class="filter-box">
+        <label for="categorias">Categoría:</label>
+        <select name="categorias" id="categorias" class="filter-select" aria-label="Filtrar por categoría">
+          <option value="">Todas</option>
+          <option value="cadenas">Cadenas</option>
+          <option value="anillos">Anillos</option>
+          <option value="pendientes">Pendientes</option>
+          <option value="relojes">Relojes</option>
+        </select>
+      </div>
+
+      <!-- Ordenamiento -->
+      <div class="filter-box">
+        <label for="ordenamiento">Ordenar por:</label>
+        <select name="ordenamiento" id="ordenamiento" class="filter-select" aria-label="Ordenar productos">
+          <option value="default">Predeterminado</option>
+          <option value="precio-asc">Precio: Menor a Mayor</option>
+          <option value="precio-desc">Precio: Mayor a Menor</option>
+          <option value="nombre-asc">Nombre: A-Z</option>
+          <option value="nombre-desc">Nombre: Z-A</option>
+          <option value="stock-desc">Mayor Stock</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Información de resultados -->
+    <div id="results-info" class="results-info" style="display: none;"></div>
 
     <div class="flex-contenedor-catalogo" id="catalogo"></div>
   </main>

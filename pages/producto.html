@@ -15,8 +15,11 @@
 </head>
 
 <body>
+  <!-- Skip to main content (accesibilidad) -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
   <!-- Menú Hamburguesa -->
-  <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
+  <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú de navegación">
     <span class="hamburger-line"></span>
     <span class="hamburger-line"></span>
     <span class="hamburger-line"></span>
@@ -52,8 +55,8 @@
     </nav>
   </header>
 
-  <main>
-    <section id="detalleProducto" class="detalle-producto"></section>
+  <main id="main-content" role="main">
+    <section id="detalleProducto" class="detalle-producto" role="region" aria-label="Detalles del producto"></section>
   </main>
 
   <footer>
