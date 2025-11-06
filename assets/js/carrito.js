@@ -1,5 +1,5 @@
 // assets/js/carrito.js
-import { cartManager, addCartIconToSubpage } from "./cart.js";
+import { cartManager, addCartIconToSubpage, initializeCartCounterUpdates } from "./cart.js";
 
 const cartItemsContainer = document.querySelector("#cart-items");
 const cartSummary = document.querySelector("#cart-summary");
@@ -12,33 +12,8 @@ const clearCartBtn = document.querySelector("#clear-cart-btn");
 // Agregar carrito a la página
 addCartIconToSubpage();
 
-// Asegurar que el contador se actualice cuando la página esté lista
-document.addEventListener('DOMContentLoaded', () => {
-  // Múltiples intentos para asegurar actualización
-  const updateCounter = () => {
-    if (cartManager) {
-      cartManager.updateCartCounter();
-    }
-  };
-
-  setTimeout(updateCounter, 50);
-  setTimeout(updateCounter, 150);
-  setTimeout(updateCounter, 300);
-});
-
-// También actualizar cuando la ventana recupere el focus
-window.addEventListener('focus', () => {
-  if (cartManager) {
-    cartManager.updateCartCounter();
-  }
-});
-
-// Actualizar en visibilitychange
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && cartManager) {
-    cartManager.updateCartCounter();
-  }
-});
+// Inicializar actualizaciones del contador (función reutilizable)
+initializeCartCounterUpdates();
 
 function renderCartItems() {
   const cart = cartManager.getCart();
@@ -137,10 +112,21 @@ function decreaseQuantity(productId) {
       showMessage(`${item.nombre} - cantidad reducida`, "success");
       renderCartItems();
     } else if (item && item.quantity === 1) {
-      // Si queda solo 1, preguntar si quiere eliminar
-      if (confirm(`¿Eliminar ${item.nombre} del carrito completamente?`)) {
-        removeAllItemFromCart(productId);
-      }
+      // Si queda solo 1, preguntar si quiere eliminar con modal
+      showConfirmModal({
+        title: 'Última unidad',
+        message: `Esta es la última unidad de <strong>${item.nombre}</strong> en tu carrito. ¿Deseas eliminarlo completamente?`,
+        icon: '⚠️',
+        confirmText: 'Sí, eliminar',
+        cancelText: 'No, mantener',
+        onConfirm: () => {
+          const removedItem = cartManager.removeFromCart(productId);
+          if (removedItem) {
+            showMessage(`${removedItem.nombre} eliminado del carrito`, "success");
+            renderCartItems();
+          }
+        }
+      });
     }
   } catch (error) {
     showMessage("Error al reducir cantidad", "error");
@@ -155,7 +141,7 @@ function increaseQuantity(productId) {
     if (item) {
       // Verificar stock disponible
       const currentStock = cartManager.getCurrentStock(productId);
-      if (currentStock = 0) {
+      if (currentStock >= 1) {
         cartManager.increaseQuantity(productId, 1);
         showMessage(`${item.nombre} - cantidad aumentada`, "success");
         renderCartItems();
@@ -173,24 +159,136 @@ function removeAllItemFromCart(productId) {
     const cart = cartManager.getCart();
     const item = cart.find(item => item.id === productId);
 
-    if (item && confirm(`¿Eliminar todos los ${item.nombre} del carrito?`)) {
-      const removedItem = cartManager.removeFromCart(productId);
-      if (removedItem) {
-        showMessage(`${removedItem.nombre} eliminado completamente del carrito`, "success");
-        renderCartItems();
-      }
+    if (item) {
+      showConfirmModal({
+        title: '¿Eliminar producto?',
+        message: `¿Estás seguro de que quieres eliminar <strong>${item.nombre}</strong> del carrito? (${item.quantity} unidades)`,
+        icon: '🗑️',
+        confirmText: 'Sí, eliminar',
+        cancelText: 'Cancelar',
+        onConfirm: () => {
+          const removedItem = cartManager.removeFromCart(productId);
+          if (removedItem) {
+            showMessage(`${removedItem.nombre} eliminado completamente del carrito`, "success");
+            renderCartItems();
+          }
+        }
+      });
     }
   } catch (error) {
     showMessage("Error al eliminar el producto", "error");
   }
 }
 
+// Función para crear y mostrar modal de confirmación
+function showConfirmModal(options) {
+  const { title, message, icon, confirmText, cancelText, onConfirm, onCancel, confirmClass } = options;
+
+  // Crear overlay del modal
+  const modalOverlay = document.createElement('div');
+  modalOverlay.className = 'modal-overlay';
+  modalOverlay.innerHTML = `
+    <div class="modal-content" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
+      <div class="modal-header">
+        <span class="modal-icon" aria-hidden="true">${icon || '⚠️'}</span>
+        <h3 id="modal-title">${title || 'Confirmar acción'}</h3>
+      </div>
+      <div class="modal-body" id="modal-description">
+        ${message || '¿Estás seguro de continuar?'}
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-cancel" id="modal-cancel-btn">
+          ${cancelText || 'Cancelar'}
+        </button>
+        <button class="modal-btn modal-btn-confirm ${confirmClass || ''}" id="modal-confirm-btn">
+          ${confirmText || 'Confirmar'}
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modalOverlay);
+
+  // Mostrar modal con animación
+  setTimeout(() => modalOverlay.classList.add('active'), 10);
+
+  // Focus en el botón cancelar para accesibilidad
+  const cancelBtn = modalOverlay.querySelector('#modal-cancel-btn');
+  const confirmBtn = modalOverlay.querySelector('#modal-confirm-btn');
+  
+  setTimeout(() => cancelBtn.focus(), 100);
+
+  // Función para cerrar modal
+  const closeModal = () => {
+    modalOverlay.classList.remove('active');
+    setTimeout(() => modalOverlay.remove(), 300);
+  };
+
+  // Event listeners
+  cancelBtn.addEventListener('click', () => {
+    closeModal();
+    if (onCancel) onCancel();
+  });
+
+  confirmBtn.addEventListener('click', () => {
+    closeModal();
+    if (onConfirm) onConfirm();
+  });
+
+  // Navegación por teclado (Tab trap dentro del modal)
+  const focusableElements = modalOverlay.querySelectorAll('button');
+  const firstFocusable = focusableElements[0];
+  const lastFocusable = focusableElements[focusableElements.length - 1];
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      if (onCancel) onCancel();
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+    
+    // Tab trap
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable.focus();
+        }
+      }
+    }
+  };
+  document.addEventListener('keydown', handleKeyDown);
+
+  // Cerrar al hacer click fuera del modal
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) {
+      closeModal();
+      if (onCancel) onCancel();
+    }
+  });
+}
+
 function clearCart() {
-  if (confirm("¿Estás seguro de que quieres vaciar el carrito?")) {
-    cartManager.clearCart();
-    showMessage("Carrito vaciado", "success");
-    renderCartItems();
-  }
+  showConfirmModal({
+    title: '¿Vaciar carrito?',
+    message: '¿Estás seguro de que quieres eliminar todos los productos del carrito? Esta acción no se puede deshacer.',
+    icon: '🗑️',
+    confirmText: 'Sí, vaciar',
+    cancelText: 'No, mantener',
+    confirmClass: '',
+    onConfirm: () => {
+      cartManager.clearCart();
+      showMessage("Carrito vaciado exitosamente", "success");
+      renderCartItems();
+    }
+  });
 }
 
 function showMessage(message, type) {
@@ -211,18 +309,30 @@ function simulateCheckout() {
   }
 
   const totalPrice = cartManager.getTotalPrice();
-  const confirmMessage = `¿Confirmar compra por $${totalPrice.toLocaleString("es-AR")}?`;
+  const totalItems = cartManager.getTotalItems();
 
-  if (confirm(confirmMessage)) {
-    // Simular proceso de checkout
-    showMessage("¡Compra realizada con éxito! Gracias por tu compra.", "success");
+  showConfirmModal({
+    title: 'Confirmar compra',
+    message: `
+      <p><strong>Total de productos:</strong> ${totalItems} unidades</p>
+      <p><strong>Monto total:</strong> $${totalPrice.toLocaleString("es-AR")}</p>
+      <p style="margin-top: 15px;">¿Deseas proceder con el pago?</p>
+    `,
+    icon: '💳',
+    confirmText: 'Confirmar compra',
+    cancelText: 'Seguir comprando',
+    confirmClass: 'success',
+    onConfirm: () => {
+      // Simular proceso de checkout
+      showMessage("¡Compra realizada con éxito! Gracias por tu compra.", "success");
 
-    // Limpiar carrito después del checkout
-    setTimeout(() => {
-      cartManager.clearCart();
-      renderCartItems();
-    }, 2000);
-  }
+      // Limpiar carrito después del checkout
+      setTimeout(() => {
+        cartManager.clearCart();
+        renderCartItems();
+      }, 2000);
+    }
+  });
 }
 
 // Event listeners

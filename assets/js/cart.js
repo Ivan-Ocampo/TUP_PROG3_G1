@@ -363,10 +363,10 @@ export function addCartIconToPage() {
   const cartContainer = document.createElement('div');
   cartContainer.id = 'cart-container-fixed';
   cartContainer.innerHTML = `
-    <a href="./pages/carrito.html" id="cart-link" class="cart-icon-main">
+    <a href="./pages/carrito.html" id="cart-link" class="cart-icon-main" aria-label="Ir al carrito de compras">
       <div class="cart-icon-wrapper">
-        <span class="cart-emoji">🛒</span>
-        <span id="cart-counter" class="cart-counter-badge"></span>
+        <span class="cart-emoji" aria-hidden="true">🛒</span>
+        <span id="cart-counter" class="cart-counter-badge" role="status" aria-live="polite" aria-label="Cantidad de productos en el carrito"></span>
       </div>
     </a>
   `;
@@ -391,10 +391,10 @@ export function addCartIconToSubpage() {
   const cartContainer = document.createElement('div');
   cartContainer.id = 'cart-container-fixed';
   cartContainer.innerHTML = `
-    <a href="carrito.html" id="cart-link" class="cart-icon-main">
+    <a href="carrito.html" id="cart-link" class="cart-icon-main" aria-label="Ir al carrito de compras">
       <div class="cart-icon-wrapper">
-        <span class="cart-emoji">🛒</span>
-        <span id="cart-counter" class="cart-counter-badge"></span>
+        <span class="cart-emoji" aria-hidden="true">🛒</span>
+        <span id="cart-counter" class="cart-counter-badge" role="status" aria-live="polite" aria-label="Cantidad de productos en el carrito"></span>
       </div>
     </a>
   `;
@@ -559,5 +559,43 @@ window.removeCartNotification = function (messageDiv) {
     }, 400);
   }
 };
+
+// Función reutilizable para inicializar el contador del carrito
+export function initializeCartCounterUpdates() {
+  const updateCounter = () => {
+    if (cartManager) {
+      cartManager.updateCartCounter();
+    }
+  };
+
+  // Actualización inicial después de DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(updateCounter, 50);
+      setTimeout(updateCounter, 150);
+      setTimeout(updateCounter, 300);
+    });
+  } else {
+    // Si el DOM ya está listo, ejecutar inmediatamente
+    setTimeout(updateCounter, 50);
+    setTimeout(updateCounter, 150);
+    setTimeout(updateCounter, 300);
+  }
+
+  // Actualizar cuando la ventana recupere el focus
+  window.addEventListener('focus', updateCounter);
+
+  // Actualizar cuando la página se haga visible
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updateCounter();
+    }
+  });
+
+  // Actualizar cuando el carrito cambie
+  window.addEventListener('cartUpdated', updateCounter);
+
+  console.log('📌 Cart counter updates initialized');
+}
 
 console.log('📌 Cart module loaded');

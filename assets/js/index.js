@@ -1,42 +1,17 @@
 // assets/js/index.js
 
-import { addCartIconToPage, cartManager } from "./cart.js";
+import { addCartIconToPage, cartManager, initializeCartCounterUpdates } from "./cart.js";
 
 const contenedor = document.querySelector("#destacados");
 
 // Agregar carrito a la página principal
 addCartIconToPage();
 
+// Inicializar actualizaciones del contador (función reutilizable)
+initializeCartCounterUpdates();
+
 //Para guardar los productos
 let originalProductos = [];
-
-// Asegurar que el contador se actualice cuando la página esté lista
-document.addEventListener('DOMContentLoaded', () => {
-  // Múltiples intentos para asegurar actualización
-  const updateCounter = () => {
-    if (cartManager) {
-      cartManager.updateCartCounter();
-    }
-  };
-
-  setTimeout(updateCounter, 50);
-  setTimeout(updateCounter, 150);
-  setTimeout(updateCounter, 300);
-});
-
-// También actualizar cuando la ventana recupere el focus
-window.addEventListener('focus', () => {
-  if (cartManager) {
-    cartManager.updateCartCounter();
-  }
-});
-
-// Actualizar en visibilitychange
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && cartManager) {
-    cartManager.updateCartCounter();
-  }
-});
 
 function renderizar(lista) {
   contenedor.innerHTML = "";
@@ -74,16 +49,94 @@ function cargarDestacados() {
   renderizar(destacados);
 }
 
+// Función para validar estructura de productos
+function validateProducts(products) {
+  if (!Array.isArray(products)) {
+    throw new Error('Los datos de productos deben ser un array.');
+  }
+
+  if (products.length === 0) {
+    throw new Error('No hay productos disponibles en la base de datos.');
+  }
+
+  const requiredFields = ['id', 'nombre', 'descripcion', 'categoria', 'precio', 'stock', 'imgIndex', 'img', 'alt'];
+  
+  products.forEach((prod, index) => {
+    // Verificar que tenga todos los campos requeridos
+    requiredFields.forEach(field => {
+      if (prod[field] === undefined || prod[field] === null) {
+        throw new Error(`Producto en posición ${index} no tiene el campo requerido: ${field}`);
+      }
+    });
+
+    // Validaciones de tipo
+    if (typeof prod.id !== 'number' || prod.id <= 0) {
+      throw new Error(`Producto "${prod.nombre || 'desconocido'}" tiene un ID inválido.`);
+    }
+
+    if (typeof prod.nombre !== 'string' || prod.nombre.trim() === '') {
+      throw new Error(`Producto con ID ${prod.id} tiene un nombre inválido.`);
+    }
+
+    if (typeof prod.precio !== 'number' || prod.precio < 0) {
+      throw new Error(`Producto "${prod.nombre}" tiene un precio inválido.`);
+    }
+
+    if (typeof prod.stock !== 'number' || prod.stock < 0) {
+      throw new Error(`Producto "${prod.nombre}" tiene un stock inválido.`);
+    }
+
+    // Validar categorías permitidas
+    const categoriasPermitidas = ['cadenas', 'anillos', 'pendientes', 'relojes'];
+    if (!categoriasPermitidas.includes(prod.categoria)) {
+      throw new Error(`Producto "${prod.nombre}" tiene una categoría inválida: ${prod.categoria}`);
+    }
+  });
+
+  return true;
+}
+
+// Función helper para manejar errores HTTP
+async function fetchWithErrorHandling(url, errorContext = 'datos') {
+  try {
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      // Manejar diferentes códigos de error HTTP
+      switch (response.status) {
+        case 404:
+          throw new Error(`No se encontró el archivo de ${errorContext}. Verifica la ruta.`);
+        case 500:
+          throw new Error(`Error del servidor al cargar ${errorContext}. Intenta más tarde.`);
+        case 403:
+          throw new Error(`Acceso denegado a ${errorContext}.`);
+        default:
+          throw new Error(`Error HTTP ${response.status}: ${response.statusText}`);
+      }
+    }
+    
+    const data = await response.json();
+    return data;
+    
+  } catch (error) {
+    // Distinguir entre errores de red y errores de parsing
+    if (error instanceof SyntaxError) {
+      throw new Error(`El archivo de ${errorContext} tiene formato JSON inválido.`);
+    } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      throw new Error(`Sin conexión: No se pudo cargar ${errorContext}. Verifica tu conexión a internet.`);
+    }
+    throw error; // Re-lanzar otros errores
+  }
+}
+
 //Función 'main' asíncrona para cargar datos
 async function initializeApp() {
   try {
-    //Cargar los datos del JSON
-    const response = await fetch('./assets/data/data.json');
-    if (!response.ok) {
-      throw new Error(`Error al cargar productos.json: ${response.statusText}`);
-    }
-    originalProductos = await response.json();
+    //Cargar los datos del JSON con manejo robusto de errores
+    originalProductos = await fetchWithErrorHandling('./assets/data/data.json', 'productos');
 
+    // Validar estructura de datos antes de usar
+    validateProducts(originalProductos);
   
     //Configurar cartManager para que sepa de dónde sacar el stock original
     cartManager.getOriginalStock = function (productId) {

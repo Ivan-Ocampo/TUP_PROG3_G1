@@ -18,8 +18,11 @@
 </head>
 
 <body>
+  <!-- Skip to main content (accesibilidad) -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
   <!-- Menú Hamburguesa -->
-  <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
+  <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú de navegación">
     <span class="hamburger-line"></span>
     <span class="hamburger-line"></span>
     <span class="hamburger-line"></span>
@@ -55,9 +58,9 @@
     </nav>
   </header>
 
-  <main>
-    <section class="hero" id="hero">
-      <h1>Bienvenidos a Luxury</h1>
+  <main id="main-content" role="main">
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Bienvenidos a Luxury</h1>
       <p>Joyas de lujo: <strong>cadenas</strong>, <strong>anillos</strong>, <strong>pendientes</strong>,
         <strong>relojes</strong> y más.</p>
     </section>
