@@ -1,6 +1,5 @@
 // assets/js/carrito.js
 import { cartManager, addCartIconToSubpage, initializeCartCounterUpdates } from "./cart.js";
-import { checkoutAutocompleteAPI } from "./checkout-autocomplete.js";
 
 const cartItemsContainer = document.querySelector("#cart-items");
 const cartSummary = document.querySelector("#cart-summary");
@@ -526,12 +525,9 @@ function showCheckoutFormModal(totalPrice, totalItems) {
   const metodoPagoRadios = checkoutOverlay.querySelectorAll('input[name="metodoPago"]');
   const tarjetaFields = checkoutOverlay.querySelector('#tarjeta-fields');
 
-<<<<<<< HEAD
-=======
-  // Agregar botón de autocompletar para pruebas
-  checkoutAutocompleteAPI.addAutocompleteButton(form, 'before');
+  // Agregar botón de autocompletar para pruebas (carga dinámica)
+  loadCheckoutAutocompleteAPI(form);
 
->>>>>>> a213f8bab1f191eb0f3bf8920e4e83683c71524f
   // Enfocar en primer campo
   setTimeout(() => {
     checkoutOverlay.querySelector('#checkout-nombre').focus();
@@ -766,6 +762,25 @@ function getPaymentMethodName(metodo) {
     'efectivo': 'Efectivo al recibir'
   };
   return metodos[metodo] || metodo;
+}
+
+/**
+ * Cargar API de autocompletado de forma dinámica (opcional)
+ * Si falla la carga, el formulario funciona normalmente sin autocompletado
+ */
+async function loadCheckoutAutocompleteAPI(form) {
+  try {
+    const module = await import('./checkout-autocomplete.js');
+    const checkoutAutocompleteAPI = module.checkoutAutocompleteAPI;
+    
+    if (checkoutAutocompleteAPI && typeof checkoutAutocompleteAPI.addAutocompleteButton === 'function') {
+      checkoutAutocompleteAPI.addAutocompleteButton(form, 'before');
+    }
+  } catch (error) {
+    // Si falla la carga del módulo de autocompletado, no hacer nada
+    // El formulario sigue funcionando normalmente
+    console.log('Módulo de autocompletado no disponible (opcional)');
+  }
 }
 
 // Event listeners
