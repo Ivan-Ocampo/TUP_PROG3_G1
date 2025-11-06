@@ -411,7 +411,7 @@ button:hover {
   color: white;
 }
 
-.btn-violeta:hover{
+.btn-violeta:hover {
   background-color: #000000;
   color: white;
 
@@ -687,6 +687,10 @@ p {
     flex-direction: column;
     text-align: center;
     gap: 15px;
+  }
+
+  body {
+    margin-top: 0px;
   }
 
   .cart-item-info {
@@ -1705,6 +1709,7 @@ p {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -1715,6 +1720,7 @@ p {
     transform: translateY(50px) scale(0.9);
     opacity: 0;
   }
+
   to {
     transform: translateY(0) scale(1);
     opacity: 1;
@@ -2001,7 +2007,7 @@ p {
   accent-color: #710b91;
 }
 
-.payment-option input[type="radio"]:checked ~ .payment-label {
+.payment-option input[type="radio"]:checked~.payment-label {
   color: #710b91;
   font-weight: 600;
 }
@@ -2086,6 +2092,7 @@ p {
     transform: translateY(100px) scale(0.9);
     opacity: 0;
   }
+
   to {
     transform: translateY(0) scale(1);
     opacity: 1;
