@@ -215,7 +215,7 @@ function showConfirmModal(options) {
   // Focus en el botón cancelar para accesibilidad
   const cancelBtn = modalOverlay.querySelector('#modal-cancel-btn');
   const confirmBtn = modalOverlay.querySelector('#modal-confirm-btn');
-  
+
   setTimeout(() => cancelBtn.focus(), 100);
 
   // Función para cerrar modal
@@ -246,7 +246,7 @@ function showConfirmModal(options) {
       if (onCancel) onCancel();
       document.removeEventListener('keydown', handleKeyDown);
     }
-    
+
     // Tab trap
     if (e.key === 'Tab') {
       if (e.shiftKey) {
@@ -514,7 +514,7 @@ function showCheckoutFormModal(totalPrice, totalItems) {
   `;
 
   document.body.appendChild(checkoutOverlay);
-  
+
   // Mostrar modal con animación
   setTimeout(() => checkoutOverlay.classList.add('active'), 10);
 
@@ -542,7 +542,7 @@ function showCheckoutFormModal(totalPrice, totalItems) {
   // Event listeners para cerrar
   closeBtn.addEventListener('click', closeCheckoutModal);
   cancelBtn.addEventListener('click', closeCheckoutModal);
-  
+
   checkoutOverlay.addEventListener('click', (e) => {
     if (e.target === checkoutOverlay) {
       closeCheckoutModal();
@@ -594,11 +594,11 @@ function showCheckoutFormModal(totalPrice, totalItems) {
   // Validación y envío del formulario
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     if (validateCheckoutForm(form)) {
       const formData = new FormData(form);
       const checkoutData = Object.fromEntries(formData.entries());
-      
+
       // Procesar compra
       processCheckout(checkoutData, totalPrice, totalItems);
       closeCheckoutModal();
@@ -617,12 +617,12 @@ function showCheckoutFormModal(totalPrice, totalItems) {
 
 function validateCheckoutForm(form) {
   let isValid = true;
-  
+
   // Limpiar errores previos
   form.querySelectorAll('.error-message').forEach(span => {
     span.textContent = '';
   });
-  
+
   form.querySelectorAll('input[required], select[required]').forEach(input => {
     input.classList.remove('input-error');
   });
@@ -772,7 +772,7 @@ async function loadCheckoutAutocompleteAPI(form) {
   try {
     const module = await import('./checkout-autocomplete.js');
     const checkoutAutocompleteAPI = module.checkoutAutocompleteAPI;
-    
+
     if (checkoutAutocompleteAPI && typeof checkoutAutocompleteAPI.addAutocompleteButton === 'function') {
       checkoutAutocompleteAPI.addAutocompleteButton(form, 'before');
     }
