@@ -92,34 +92,31 @@ export class CartManager {
     }
   }
 
-  // Agregar producto al carrito
-  addToCart(product, quantity = 1) {
-    // Verificar si hay stock disponible
-    const currentStock = this.getCurrentStock(product.id);
-    if (currentStock <= 0) {
-      throw new Error(`Stock insuficiente. Stock disponible: ${currentStock}`);
-    }
+// Agregar producto al carrito
+addToCart(product, quantity = 1) {
+  const currentStock = this.getCurrentStock(product.id);
 
-    // Buscar si el producto ya existe en el carrito
-    const existingItem = this.cart.find(item => item.id === product.id);
+  if (currentStock <= 0) {
+    throw new Error(`Stock insuficiente. Stock disponible: ${currentStock}`);
+  }
 
-    if (existingItem) {
-      // Si existe, aumentar cantidad
-      const newQuantity = existingItem.quantity + quantity;
-      if (this.getCurrentStock(product.id) <= newQuantity) {
-        throw new Error(`Stock insuficiente. Stock disponible: ${this.getCurrentStock(product.id)}`);
-      }
-      existingItem.quantity = newQuantity;
-    } else {
-      // Si no existe, agregar nuevo item
-      this.cart.push({
-        id: product.id,
-        nombre: product.nombre,
-        precio: product.precio,
-        img: product.img,
-        quantity: quantity
-      });
-    }
+  const existingItem = this.cart.find(item => item.id === product.id);
+
+  // Si el producto YA está en el carrito no lo suma ni permite agregar de nuevo
+  if (existingItem) {
+    throw new Error(`Producto ya está en el carrito. Modifique la cantidad desde el carrito. Stock disponible: ${currentStock}`
+    );
+  }
+
+  // Si no existe, agregar nuevo item
+  this.cart.push({
+    id: product.id,
+    nombre: product.nombre,
+    precio: product.precio,
+    img: product.img,
+    quantity: quantity
+  });
+
 
     // Actualizar stock
     this.updateStock(product.id, -quantity);
